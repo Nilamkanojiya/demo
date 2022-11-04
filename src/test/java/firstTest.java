@@ -7,7 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.time.Duration;
+
 
 public class firstTest {
     WebDriver driver;
@@ -17,27 +18,34 @@ public class firstTest {
     }
 
     @Test
-    void  selectEchoDot(){
+    void  solicitorJourneyCaseCreation() {
         driver= new ChromeDriver();
-        driver.get("https://www.amazon.co.uk/");
+        driver.get("https://manage-case.demo.platform.hmcts.net/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.manage().window().maximize();
 
 
-        //accept cookies
-        WebElement cookiesCheck = driver.findElement(By.className("a-spacing-small"));
-        boolean flag = cookiesCheck.isDisplayed();
-        if (flag == true) {
-            WebElement acceptCookiesButton = driver.findElement(By.id("sp-cc-accept"));
-            acceptCookiesButton.click();
-        }
+//        //accept cookies
+//        WebElement cookiesCheck = driver.findElement(By.id("cookie-accept-submit"));
+//        boolean flag = cookiesCheck.isDisplayed();
+//        if (flag == true) {
+//            WebElement acceptCookiesButton = driver.findElement(By.id("cookie-accept-submit"));
+//            acceptCookiesButton.click();
+//        }
 
-        //search a keyword
-        WebElement keyword = driver.findElement(By.id("twotabsearchtextbox"));
-        keyword.sendKeys("Alexa");
-        WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
-        searchButton.click();
-        WebElement echoDot = driver.findElement(By.linkText("Echo Dot (3rd Gen) - Compact Bluetooth Speaker with Alexa - Charcoal Fabric"));
-        echoDot.click();
+        //login
+        WebElement username= driver.findElement(By.id("username"));
+        username.sendKeys("fr_applicant_solicitor1@mailinator.com");
+
+        WebElement password= driver.findElement(By.id("password"));
+        password.sendKeys("Testing1234");
+
+        WebElement sigInButton= driver.findElement(By.name("save"));
+       sigInButton.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+
+        driver.findElement(By.linkText("Create case"));
+
     }
 
 
